@@ -3,9 +3,16 @@ const model = {
     numVal: 0
   }
 };
-const doubledNumGen = function*(n = 0) {
-  for (n; ; n += 1) {
-    yield n * 2;
+const doubledNumGen = function*() {
+  let n = 0;
+  while (true) {
+    if (n >= 1) {
+      yield n;
+      n *= 2;
+    } else {
+      yield n;
+      n += 1;
+    }
   }
 };
 const view = {
