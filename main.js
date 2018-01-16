@@ -1,3 +1,5 @@
+/* eslint-disable no-debugger */
+
 const genFuncs = (function() {
   class Iterator {
     constructor(items) {
@@ -69,6 +71,12 @@ const genFuncs = (function() {
 })();
 
 const model = (function() {
+  const initGen = function(gen) {
+    const genObj = gen();
+    genObj.next();
+    return genObj;
+  };
+
   const doubledNumGen = function*() {
     let n = 1;
     while (true) {
@@ -76,8 +84,7 @@ const model = (function() {
       n *= 2;
     }
   };
-  const numGenObj = doubledNumGen();
-  numGenObj.next();
+  const numGenObj = initGen(doubledNumGen);
 
   const bdayGen = function*(day, month) {
     while (true) {
