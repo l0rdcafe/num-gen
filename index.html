@@ -7,16 +7,20 @@
   <title>Hello Bulma!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 </head>
 
 <body>
   <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <button class="button">Double Number</button>
-      <p class="subtitle" id="num">0</p>
+    <div class="container has-text-centered">
+      <p class="subtitle" id="numText">1</p>
+      <button class="button" id="numBtn">Double Number</button>
+      <p class="subtitle" style="margin-top: 1.75rem;" id="bdayText">...</p>
+      <div class="title columns has-text-centered" style="margin-top: 1.75rem;">
+        <input class="input column is-3 is-offset-2" style="padding: 0; padding-left: 0.5rem;" type="text" placeholder="Please enter a month" id="monthInput">
+          <input class="input column is-3 is-offset-1" style="padding: 0; padding-left: 0.5rem;"  type="text" placeholder="Please enter a day" id="dayInput">
+      <button class="button" id="bdayBtn" style="margin-left: 2rem;">Next Birthday</button>
+    </div>
     </div>
   </section>
   <script src="main.js"></script>
