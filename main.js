@@ -92,7 +92,10 @@ const model = (function() {
         .date(day)
         .month(month);
       yield bday;
-      bday.add(1, "years");
+      while (true) {
+        bday.add(1, "years");
+        yield bday;
+      }
     }
   };
 
@@ -129,10 +132,19 @@ const view = {
   drawNewBdayBtn() {
     const newBtn = document.createElement("button");
     const parentDiv = document.querySelector(".title");
-    newBtn.id = "enterBday";
+    newBtn.id = "nextTen";
     newBtn.className = "button";
-    newBtn.innerHTML = "New Birthday";
+    newBtn.innerHTML = "Next 10";
     parentDiv.appendChild(newBtn);
+  },
+  renderBdays(val) {
+    const parentElement = document.querySelector(".title");
+    const tenList = document.createElement("ul");
+    const bdayLi = document.createElement("li");
+    bdayLi.innerHTML = val;
+
+    parentElement.appendChild(tenList);
+    tenList.appendChild(bdayLi);
   }
 };
 
@@ -160,6 +172,7 @@ const handlers = {
         view.drawNewBdayBtn();
         view.renderNextBday(value.format("dddd D MMMM YYYY"));
         handlers.nextBdayListener();
+        handlers.nextTenListener();
       }
     }
 
@@ -172,6 +185,15 @@ const handlers = {
       view.renderNextBday(value.format("dddd D MMMM YYYY"));
     }
     document.getElementById("nextBday").addEventListener("click", nextBday);
+  },
+  nextTenListener() {
+    function nextTen() {
+      const { take } = genFuncs;
+      for (const bday of take(10, model.bdayGenObj)) {
+        view.renderBdays(bday.format("dddd D MMMM YYYY"));
+      }
+    }
+    document.getElementById("nextTen").addEventListener("click", nextTen);
   }
 };
 
