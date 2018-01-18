@@ -108,6 +108,31 @@ const view = {
   },
   renderNextBday(val) {
     document.getElementById("bdayText").innerHTML = val;
+  },
+  removeFieldsAndBtn() {
+    const fields = document.querySelectorAll(".input");
+    const enterBtn = document.getElementById("enterBday");
+    for (let i = 0; i < fields.length; i += 1) {
+      fields[i].parentNode.removeChild(fields[i]);
+    }
+    enterBtn.parentNode.removeChild(enterBtn);
+  },
+  drawNextBtn() {
+    const nextBtn = document.createElement("button");
+    const parentDiv = document.querySelector(".title");
+    nextBtn.id = "nextBday";
+    nextBtn.className = "button";
+    nextBtn.innerHTML = "Next Birthday";
+    parentDiv.classList.remove("columns");
+    parentDiv.appendChild(nextBtn);
+  },
+  drawNewBdayBtn() {
+    const newBtn = document.createElement("button");
+    const parentDiv = document.querySelector(".title");
+    newBtn.id = "enterBday";
+    newBtn.className = "button";
+    newBtn.innerHTML = "New Birthday";
+    parentDiv.appendChild(newBtn);
   }
 };
 
@@ -120,20 +145,35 @@ const handlers = {
     }
     document.getElementById("numBtn").addEventListener("click", doubleNum);
   },
-  nextBdayListener() {
-    function nextBday() {
-      const { bdayGen } = model;
+  enterBdayListener() {
+    function enterBday() {
       const monthVal = document.getElementById("monthInput").value - 1;
       const dayVal = document.getElementById("dayInput").value;
-      if (monthVal !== "" && dayVal !== "") {
-        const bdayGenObj = bdayGen(dayVal, monthVal);
-        const { value } = bdayGenObj.next();
+      const fieldsNotEmpty = monthVal !== "" && dayVal !== "";
+
+      if (fieldsNotEmpty) {
+        const { bdayGen } = model;
+        model.bdayGenObj = bdayGen(dayVal, monthVal);
+        const { value } = model.bdayGenObj.next();
+        view.removeFieldsAndBtn();
+        view.drawNextBtn();
+        view.drawNewBdayBtn();
         view.renderNextBday(value.format("dddd D MMMM YYYY"));
+        handlers.nextBdayListener();
       }
     }
-    document.getElementById("bdayBtn").addEventListener("click", nextBday);
+
+    document.getElementById("enterBday").addEventListener("click", enterBday);
+  },
+  nextBdayListener() {
+    function nextBday() {
+      const { value } = model.bdayGenObj.next();
+      console.log(value);
+      view.renderNextBday(value.format("dddd D MMMM YYYY"));
+    }
+    document.getElementById("nextBday").addEventListener("click", nextBday);
   }
 };
 
 handlers.doubleBtnListener();
-handlers.nextBdayListener();
+handlers.enterBdayListener();
