@@ -1,5 +1,3 @@
-/* eslint-disable no-debugger */
-
 const genFuncs = (function() {
   class Iterator {
     constructor(items) {
