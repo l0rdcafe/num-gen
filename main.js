@@ -181,7 +181,6 @@ const handlers = {
   nextBdayListener() {
     function nextBday() {
       const { value } = model.bdayGenObj.next();
-      console.log(value);
       view.renderNextBday(value.format("dddd D MMMM YYYY"));
     }
     document.getElementById("nextBday").addEventListener("click", nextBday);
